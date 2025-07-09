@@ -36,5 +36,3 @@ else
     echo "Pulling model $MODEL_NAME..."
     ollama pull $MODEL_NAME
 fi
-
-python -u handler.py $1
