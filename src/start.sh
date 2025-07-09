@@ -34,5 +34,12 @@ if [ -z "$MODEL_NAME" ]; then
     echo "No model name provided. Skipping model pull..."
 else
     echo "Pulling model $MODEL_NAME..."
-    ollama pull $MODEL_NAME
+    if ollama pull $MODEL_NAME; then
+        echo "Model $MODEL_NAME pulled successfully"
+    else
+        echo "Failed to pull model $MODEL_NAME"
+    fi
 fi
+
+echo "Setup complete. Keeping container running..."
+wait $OLLAMA_PID
