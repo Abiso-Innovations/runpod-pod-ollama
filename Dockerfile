@@ -24,7 +24,6 @@ RUN apt-get update --yes --quiet && DEBIAN_FRONTEND=noninteractive apt-get insta
     curl \
     pip && \
     ln -s /usr/bin/python3.11 /usr/bin/python && \
-    pip install --upgrade pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -38,7 +37,7 @@ ADD ./src /work
 ENV OLLAMA_MODELS="/runpod-volume"
 
 # Install runpod and its dependencies
-RUN pip install -r requirements.txt && \
+RUN python3.11 -m pip install -r requirements.txt --break-system-packages && \
     chmod +x start.sh
 
 # Set the entrypoint
