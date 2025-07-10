@@ -1,4 +1,4 @@
-name: 📦 Build custom Docker image and push to Docker Hub
+name: Build custom Docker image and push to Docker Hub
 
 # Workflow triggered manually (GitHub UI) or programmatically by the check-ollama-new-release workflow
 on:
@@ -25,7 +25,7 @@ on:
 
 jobs:
   build-push-docker-image:
-    name: 🐳 Build and push Docker image
+    name: Build and push Docker image
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -46,7 +46,7 @@ jobs:
           tags: ghcr.io/abiso-innovations/runpod-pod-ollama:${{ inputs.ollama_version }}${{ inputs.next_version_suffix }},ghcr.io/abiso-innovations/runpod-pod-ollama:latest
 
   create-release:
-    name: 🏷️ Create GitHub Release
+    name: Create GitHub Release
     needs: build-push-docker-image
     runs-on: ubuntu-latest
     timeout-minutes: 1

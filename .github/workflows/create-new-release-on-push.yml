@@ -18,27 +18,27 @@ jobs:
       next_version_suffix: ${{ steps.new_release_check.outputs.next_version_suffix }}
 
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 👀 Get the latest ollama-serverless stable release
+      - name: Get the latest ollama-serverless stable release
         id: custom_image_release
         uses: pozetroninc/github-action-get-latest-release@v0.8.0
         with:
           repository: ${{ github.repository }}
           excludes: prerelease,draft
 
-      - name: 🆕 Get ollama version from Dockerfile
+      - name: Get ollama version from Dockerfile
         id: ollama_release
         run: |
           version=$(grep "ARG OLLAMA_VERSION=" Dockerfile | cut -d'=' -f2)
           echo "last_version=ollama@$version" >> $GITHUB_OUTPUT
 
-      - name: 🤲 Check if it is a newer ollama release
+      - name: Check if it is a newer ollama release
         id: new_release_check
         run: |
-          echo "👀 Latest Codely custom image release: ${{ steps.custom_image_release.outputs.release }}"
-          echo "🆕 Latest ollama release: ${{ steps.ollama_release.outputs.last_version }}"
+          echo "Latest Codely custom image release: ${{ steps.custom_image_release.outputs.release }}"
+          echo "Latest ollama release: ${{ steps.ollama_release.outputs.last_version }}"
 
           custom_version_orig=$(echo "${{ steps.custom_image_release.outputs.release }}" | sed 's/ollama@//g')
           custom_version=$(echo "$custom_version_orig" | sed 's/-[0-9]*//g')  # Remove the suffix
@@ -72,7 +72,7 @@ jobs:
               echo "next_version_suffix=$suffix" >> $GITHUB_OUTPUT
           fi
 
-      - name: 🔡 Remove 'ollama@' from release name to get the version
+      - name: Remove 'ollama@' from release name to get the version
         id: ollama_version
         if: steps.new_release_check.outputs.has_new_release == 'true'
         run: |
