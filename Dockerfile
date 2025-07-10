@@ -1,5 +1,5 @@
 # latest is 0.9.6
-ARG OLLAMA_VERSION=0.5.14
+ARG OLLAMA_VERSION=0.9.6
 
 # Use an official base${OLLAMA_VERSION} image with your desired version
 FROM ollama/ollama:${OLLAMA_VERSION}
