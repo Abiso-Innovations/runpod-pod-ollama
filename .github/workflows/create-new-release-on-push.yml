@@ -18,6 +18,9 @@ jobs:
       next_version_suffix: ${{ steps.new_release_check.outputs.next_version_suffix }}
 
     steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
       - name: 👀 Get the latest ollama-serverless stable release
         id: custom_image_release
         uses: pozetroninc/github-action-get-latest-release@v0.8.0
@@ -25,11 +28,11 @@ jobs:
           repository: ${{ github.repository }}
           excludes: prerelease,draft
 
-      - name: 🆕 Get the latest ollama release
+      - name: 🆕 Get ollama version from Dockerfile
         id: ollama_release
-        uses: dvershinin/lastversion-action@main
-        with:
-          repository: 'ollama/ollama'
+        run: |
+          version=$(grep "ARG OLLAMA_VERSION=" Dockerfile | cut -d'=' -f2)
+          echo "last_version=ollama@$version" >> $GITHUB_OUTPUT
 
       - name: 🤲 Check if it is a newer ollama release
         id: new_release_check
