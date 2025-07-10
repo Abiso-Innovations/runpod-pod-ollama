@@ -34,14 +34,16 @@ jobs:
       - uses: docker/setup-buildx-action@v3
       - uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
           context: ./
           build-args: OLLAMA_VERSION=${{ inputs.ollama_version }}
+          platforms: linux/amd64
           push: true
-          tags: svenbrnn/runpod-ollama:${{ inputs.ollama_version }}${{ inputs.next_version_suffix }},svenbrnn/runpod-ollama:latest
+          tags: ghcr.io/abiso-innovations/runpod-pod-ollama:${{ inputs.ollama_version }}${{ inputs.next_version_suffix }},ghcr.io/abiso-innovations/runpod-pod-ollama:latest
 
   create-release:
     name: 🏷️ Create GitHub Release

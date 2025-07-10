@@ -8,20 +8,25 @@ ENV PYTHONUNBUFFERED=1
 # Set up the working directory
 WORKDIR /
 
-RUN apt-get update --yes --quiet && DEBIAN_FRONTEND=noninteractive apt-get install --yes --quiet --no-install-recommends \
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update --yes --quiet && \
+    apt-get install --yes --quiet --no-install-recommends \
     software-properties-common \
     gpg-agent \
-    build-essential apt-utils \
-    && apt-get install --reinstall ca-certificates \
-    && add-apt-repository --yes ppa:deadsnakes/ppa && apt update --yes --quiet \
-    && DEBIAN_FRONTEND=noninteractive apt-get install --yes --quiet --no-install-recommends \
+    ca-certificates \
+    curl \
+    && add-apt-repository --yes ppa:deadsnakes/ppa && \
+    apt-get update --yes --quiet && \
+    apt-get install --yes --quiet --no-install-recommends \
     python3.11 \
     python3.11-dev \
     python3.11-distutils \
     python3.11-lib2to3 \
     python3.11-gdbm \
     python3.11-tk \
-    curl \
+    python3.11-venv \
+    build-essential \
     pip && \
     ln -s /usr/bin/python3.11 /usr/bin/python && \
     apt-get clean && \
